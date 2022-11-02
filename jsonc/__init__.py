@@ -77,17 +77,15 @@ def loads(file: str, allow_trailing_comma: bool = False):
         if result := _is_string(file, i):
             new_file.append(file[i : result[1]])
             i = result[1]
-            continue
-        elif (
-            (result := _is_single_line_comment(file, i))
-            or (result := _is_multi_line_comment(file, i))
-            or (allow_trailing_comma and (result := _is_trailing_comma(file, i)))
-        ):
+        elif result := _is_single_line_comment(file, i):
             i = result[1]
-            continue
-
-        new_file.append(file[i])
-        i += 1
+        elif result := _is_multi_line_comment(file, i):
+            i = result[1]
+        elif allow_trailing_comma and (result := _is_trailing_comma(file, i)):
+            i = result[1]
+        else:
+            new_file.append(file[i])
+            i += 1
 
     return json.loads("".join(new_file))
 
