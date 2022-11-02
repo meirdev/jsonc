@@ -13,7 +13,7 @@ def test_escape_string():
 }
     """
 
-    assert jsonc.loads(file) == {"a": "b\"", "c": "d\\e\\\n\\\\f"}
+    assert jsonc.loads(file) == {"a": 'b"', "c": "d\\e\\\n\\\\f"}
 
 
 def test_single_line_comment():
