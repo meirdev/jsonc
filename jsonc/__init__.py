@@ -1,13 +1,11 @@
 import json
 import string
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:  # pragma: no cover
     from _typeshed import SupportsRead
 
 RangeResult = tuple[int, int]
-
-JSON = Any
 
 
 def _is_escaped(file: str, index: int) -> bool:
@@ -71,7 +69,7 @@ def _is_trailing_comma(file: str, index: int) -> RangeResult | None:
     return None
 
 
-def loads(file: str, allow_trailing_comma: bool = False) -> JSON:
+def loads(file: str, allow_trailing_comma: bool = False):
     new_file = []
 
     i = 0
@@ -94,5 +92,5 @@ def loads(file: str, allow_trailing_comma: bool = False) -> JSON:
     return json.loads("".join(new_file))
 
 
-def load(file: "SupportsRead[str]", allow_trailing_comma: bool = False) -> JSON:
+def load(file: "SupportsRead[str]", allow_trailing_comma: bool = False):
     return loads(file.read(), allow_trailing_comma)
